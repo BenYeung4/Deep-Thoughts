@@ -7,7 +7,7 @@ const { gql } = require("apollo-server-express");
 //type User - user will return all the data in their Mongoose model.  friends field is an array that will populate data that also adheres to the User type
 //type Thought - information that we've placed, quieries to retrieve a single thought by its _id value, all users, and a single user by their username.  The ! after String, indicates that for that query to be carried out, that data must exist.  Otherwise, apollo will return an error to the client.
 //type Reaction - when run the thoughts query, we can also run the Reaction field to get back an array of reaction data for each thought ie. "reactions" are simply replies to or comments about a single thought
-//Query - how we preform GET request and ask for data from a GraphQL API, [] made it a custom array.  we placed(username: string), we defined our thought query that it could recieve a parameter if we wnated.  in this case, the parameter we would be identified as username and would have a string data type.
+//Query - how we preform GET request and ask for data from a GraphQL API, [] made it a custom array.  we placed(username: string), we defined our thought query that it could recieve a parameter if we wnated.   in this case, the parameter we would be identified as username and would have a string data type.  Included me: User as an example of saving the token as a local storage
 //type Mutation - login and addUser , both will return a User object: either the user who sucessfully logged in or the user who was just created on sign-up.  We've updated the User to be Auth, so goes from User > Auth > Mutation
 //type Auth - under utils/auth includes the genration of tokens. Toekn isnt part of the User model, rather we create a new type specifically for authentication.  Meaning that tan Auth type must return a token and can optionally INCLUDE ANY OTHER USER DATA!!!!!, which is why we updated Mutation from their User to Auth
 const typeDefs = gql`
@@ -37,6 +37,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    me: User
     users: [User]
     user(username: String!): User
     thoughts(username: String): [Thought]

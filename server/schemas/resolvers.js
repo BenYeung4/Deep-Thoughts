@@ -40,7 +40,22 @@ const resolvers = {
         .populate("friends")
         .populate("thoughts");
     },
+
+    // me Query to include token
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate("thoughts")
+          .populate("friends");
+
+        return userData;
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
   },
+
   Mutation: {
     //the mongoose user model creates a new user in the database with whatever is passed in as the args.
     addUser: async (parent, args) => {
