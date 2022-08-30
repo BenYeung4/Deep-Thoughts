@@ -3,11 +3,30 @@
 // import the gql tagged template function from apollo-server-express
 const { gql } = require("apollo-server-express");
 
-// create our typeDefs
-//Query - how we preform GET request and ask for data from a GraphQL API
+// create our typeDefs thse are customs
+//type Thought - information that we've placed
+//type Reaction - when run the thoughts query, we can also run the Reaction field to get back an array of reaction data for each thought ie. "reactions" are simply replies to or comments about a single thought
+//Query - how we preform GET request and ask for data from a GraphQL API, [] made it a custom array.  we placed(username: string), we defined our thought query that it could recieve a parameter if we wnated.  in this case, the parameter we would be identified as username and would have a string data type.
+
 const typeDefs = gql`
+  type Thought {
+    _id: ID
+    thoughtText: String
+    createdAt: String
+    username: String
+    reactionCount: Int
+    reactions: [Reaction]
+  }
+
+  type Reaction {
+    _id: ID
+    reactionBody: String
+    createdAt: String
+    username: String
+  }
+
   type Query {
-    helloWorld: String
+    thoughts(username: String): [Thought]
   }
 `;
 
