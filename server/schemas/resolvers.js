@@ -3,7 +3,10 @@
 //import the Mongoose model of Thought in typeDefs.js
 const { User, Thought } = require("../models");
 
+//using with utils/auth
 const { AuthenticationError } = require("apollo-server-express");
+//generating token, in this case, help verify and with AuthenticationError
+const { signToken } = require("../utils/auth");
 
 //after entering entering the Query in typeDef, we will call it under the resolvers
 const resolvers = {
@@ -42,7 +45,10 @@ const resolvers = {
     //the mongoose user model creates a new user in the database with whatever is passed in as the args.
     addUser: async (parent, args) => {
       const user = await User.create(args);
-      return user;
+      //assign a token
+      const token = signToken(user);
+
+      return { token, user };
     },
 
     //login authentication
@@ -59,7 +65,10 @@ const resolvers = {
         throw new AuthenticationError("Incorrect credentials");
       }
 
-      return user;
+      //assign a token
+      const token = signToken(user);
+
+      return { token, user };
     },
   },
 };
