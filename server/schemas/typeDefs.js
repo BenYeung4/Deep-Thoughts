@@ -4,12 +4,21 @@
 const { gql } = require("apollo-server-express");
 
 // create our typeDefs thse are customs
+//type User - user will return all the data in their Mongoose model.  friends field is an array that will populate data that also adheres to the User type
 //type Thought - information that we've placed, quieries to retrieve a single thought by its _id value, all users, and a single user by their username.  The ! after String, indicates that for that query to be carried out, that data must exist.  Otherwise, apollo will return an error to the client.
 //type Reaction - when run the thoughts query, we can also run the Reaction field to get back an array of reaction data for each thought ie. "reactions" are simply replies to or comments about a single thought
-//type User - user will return all the data in their Mongoose model.  friends field is an array that will populate data that also adheres to the User type
 //Query - how we preform GET request and ask for data from a GraphQL API, [] made it a custom array.  we placed(username: string), we defined our thought query that it could recieve a parameter if we wnated.  in this case, the parameter we would be identified as username and would have a string data type.
-
+//type Mutation - login and addUser , both will return a User object: either the user who sucessfully logged in or the user who was just created on sign-up
 const typeDefs = gql`
+  type User {
+    _id: ID
+    username: String
+    email: String
+    friendCount: Int
+    thoughts: [Thought]
+    friends: [User]
+  }
+
   type Thought {
     _id: ID
     thoughtText: String
@@ -26,20 +35,16 @@ const typeDefs = gql`
     username: String
   }
 
-  type User {
-    _id: ID
-    username: String
-    email: String
-    friendCount: Int
-    thoughts: [Thought]
-    friends: [User]
-  }
-
   type Query {
     users: [User]
     user(username: String!): User
     thoughts(username: String): [Thought]
     thought(_id: ID!): Thought
+  }
+
+  type Mutation {
+    login(email: String!, password: String!): User
+    addUser(username: String!, email: String!, password: String!): User
   }
 `;
 

@@ -3,6 +3,8 @@
 //import the Mongoose model of Thought in typeDefs.js
 const { User, Thought } = require("../models");
 
+const { AuthenticationError } = require("apollo-server-express");
+
 //after entering entering the Query in typeDef, we will call it under the resolvers
 const resolvers = {
   //Query through thoughts
@@ -34,6 +36,30 @@ const resolvers = {
         .select("-__v -password")
         .populate("friends")
         .populate("thoughts");
+    },
+  },
+  Mutation: {
+    //the mongoose user model creates a new user in the database with whatever is passed in as the args.
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      return user;
+    },
+
+    //login authentication
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+      //usually setting errors like these would cause server to crash, but GraphQL will catch the error and send to the client instead
+      if (!user) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      return user;
     },
   },
 };
