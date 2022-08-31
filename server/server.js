@@ -38,6 +38,7 @@ const startApolloServer = async (typeDefs, resolvers) => {
     app.use(express.static(path.join(__direname, "../client/build")));
   }
 
+  //wild card for the static assets, a wildcard GET route for the server.  if we make a GET request to any location on the server that doesn't have an explicit route defined, respond with the production-ready React front-end code.
   app.get("*", (req, res) => {
     res.sendFile(path.join(__direname, "../client/build/index.html"));
   });

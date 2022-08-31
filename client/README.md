@@ -13,3 +13,8 @@ npm i @apollo/client graphql
 @apollo/client - an all-in-one dependency that enables us to connect to a GraphQL API server and execute queries or mutations using their own special form of React Hooks
 
 graphql - is a dependency much like MySQL2 was for Sequelize. Don't use it directly, but it needs to be present so that the GraphQL syntax used with Apollo Client can be understood.
+
+#install React Router
+
+- can add client-side routing to your applicaion while keeping the single-page responsiveness that React is known for.
+  npm install react-router-dom

@@ -16,6 +16,14 @@ import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 
+//after installing the npm install react-router-dom - React Router, can add client-side routing to application while keeping the single-page responsivenss
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import NoMatch from "./pages/NoMatch";
+import SingleThought from "./pages/SingleThought";
+import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
+
 //established a new link in the GraphQL server at /graphql.  we can pass many other options and conficutaion setting with createHttpLink()
 //updated the uri from uri: "http://localhost:3001/graphql", to just "graphql" and add proxy in package.json in client directory.  using this and concurrently library to only run one time instead of two terminals
 const httpLink = createHttpLink({
@@ -32,16 +40,28 @@ const client = new ApolloClient({
 function App() {
   return (
     //ApolloProvider wrapped - passing the client variable in as the value for the client prop in the provider, everything between the JSX tags will eventually have access to the server's API data though the client we set up
+    //elements in Router component, makes all of the child components on the page aware of the client-side routing that can take place.
+    //inside <div className = "container", there is Routes, holding several route component. signify that this part of the as the place where content will change according to the URL route.  when route is "/", Home will render here
+    //path="*" is a wildcard character, if thr route doesn't match any of the preceding paths, then user will see the 404 message
     <ApolloProvider client={client}>
-      <div className="flex-column justify-flex-start min-100-vh">
-        <Header />
-        <div className="container">
-          <Home />
+      <Router>
+        <div className="flex-column justify-flex-start min-100-vh">
+          <Header />
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/thought" element={<SingleThought />} />
+
+              <Route path="*" element={<NoMatch />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </Router>
     </ApolloProvider>
   );
 }
-
 export default App;
