@@ -33,9 +33,11 @@ A user can befriend other users.
 
 ## Usage:
 
-### `npm start`
+### `npm run develop` - on root directory to run both front and back end
 
-### `npm run watch` - run localhost:3001/graphql on web browser
+#### `npm start` - for front end
+
+#### `npm run watch` - open in server side localhost:3001/graphql on web browser
 
 ## Contributing:
 

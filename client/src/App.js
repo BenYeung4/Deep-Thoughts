@@ -17,8 +17,9 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 
 //established a new link in the GraphQL server at /graphql.  we can pass many other options and conficutaion setting with createHttpLink()
+//updated the uri from uri: "http://localhost:3001/graphql", to just "graphql" and add proxy in package.json in client directory.  using this and concurrently library to only run one time instead of two terminals
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: "graphql",
 });
 
 //using ApolloClient() constructor to instantiate the Apollo Client instance and create the connection to the API endpoint.
