@@ -16,6 +16,7 @@ module.exports = {
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
 
+  //this is where secret becomes important.  if the secret on jwt.verify() doesn't match the secret that was used with jwt.sign(), the object won't be decoded.  When the JWT verification fails, an error is thrown.
   authMiddleware: function ({ req }) {
     // allows token to be sent via req.body, req.query, or headers
     let token = req.body.token || req.query.token || req.headers.authorization;
