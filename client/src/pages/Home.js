@@ -1,11 +1,10 @@
 import React from "react";
+import ThoughtList from "../components/ThoughtList";
 
 //useQuery - imported this hook from Apollo Client, allow us to make requests to the GraphQL server we connected to and made available to the application using the  <ApolloProvider> component in App.js
 import { useQuery } from "@apollo/client";
 //need to use the query with the imported Hook functionality, and we'll be able to query thought data!
 import { QUERY_THOUGHTS } from "../utils/queries";
-
-import ThoughtList from "../components/ThoughtList";
 
 const Home = () => {
   // use useQuery hook to make query request for the Thoughts data
