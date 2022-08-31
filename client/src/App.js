@@ -52,8 +52,14 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/thought" element={<SingleThought />} />
+              <Route path="/profile">
+                # the two nested Route :username & "" will allow us to use
+                optional paraments, so /profile and /profile/myUsername will
+                both render the profile component
+                <Route path=":username" element={<Profile />} />
+                <Route path="" element={<Profile />} />
+              </Route>
+              <Route path="/thought/:id" element={<SingleThought />} />
 
               <Route path="*" element={<NoMatch />} />
             </Routes>
