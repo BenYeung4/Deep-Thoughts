@@ -1,7 +1,7 @@
 {
   "name": "mern-social-mediaa",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Description",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -13,6 +13,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^5.1.0"
-  }
+    "concurrently": "^5.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenYeung4/Deep-Thoughts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BenYeung4/Deep-Thoughts/issues"
+  },
+  "homepage": "https://github.com/BenYeung4/Deep-Thoughts#readme"
 }

@@ -1,3 +1,6 @@
+//this is for concurrently to run one terminal instead of two for front and back end
+const path = require("path");
+
 const express = require("express");
 
 // import ApolloServer
@@ -28,6 +31,16 @@ const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   // integrate our Apollo server with the Express application as middleware
   server.applyMiddleware({ app });
+
+  //serve up static assets
+  //checks to see if the Node environment is in production, if it is, we instruct the express.js server to serve any files in the React applications build directory in the client folder.
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__direname, "../client/build")));
+  }
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__direname, "../client/build/index.html"));
+  });
 
   //listen for connection in Mongoose to be made, with successful connection, we start the server
   db.once("open", () => {
