@@ -11,6 +11,9 @@ import {
   createHttpLink,
 } from "@apollo/client";
 
+//instructing to retrieve the token written in login & signup. retrieve token from local storage and include it with each request to the API
+import { setContext } from "@apollo/client/link/context";
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -30,9 +33,22 @@ const httpLink = createHttpLink({
   uri: "/graphql",
 });
 
+//authLink for the authorization to retrieve the token.
+//using the setContext() function to retrieve the token from localStorage and set the HTTP request headers of every request to include the token.
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("id_token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
 //using ApolloClient() constructor to instantiate the Apollo Client instance and create the connection to the API endpoint.
 const client = new ApolloClient({
-  link: httpLink,
+  //combining the authLink and httpLink objects so that evey request retrieves the token and sets the request headers before making the request to the API.
+  link: authLink.concat(httpLink),
   //instigate new cache object using new InMemoryCache()
   cache: new InMemoryCache(),
 });
