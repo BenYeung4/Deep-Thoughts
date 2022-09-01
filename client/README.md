@@ -18,3 +18,9 @@ graphql - is a dependency much like MySQL2 was for Sequelize. Don't use it direc
 
 - can add client-side routing to your applicaion while keeping the single-page responsiveness that React is known for.
   npm install react-router-dom
+
+# install jwt-decode
+
+- serves as a helper library working with JSON Web Tokens. only missing the function for creating and validating the token, instead, it used to extract nonsensitive data such as the expiration date so we can check if it has expired before we make a request to the server that needs it.
+
+npm install jwt-decode
