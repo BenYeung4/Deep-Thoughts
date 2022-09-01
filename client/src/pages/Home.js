@@ -13,6 +13,9 @@ import Auth from "../utils/auth";
 //friends list
 import FriendList from "../components/FriendList";
 
+//Thoughtform from friends
+import ThoughtForm from "../components/ThoughtForm";
+
 const Home = () => {
   // use useQuery hook to make query request for the Thoughts data
   //loading property to indicate taht the request isn't done just yet.  when it is finished and we have data returned from the server, that information is stored in the destructured data property.
@@ -32,6 +35,11 @@ const Home = () => {
   return (
     <main>
       <div className="flex-row justify-space-between">
+        {loggedIn && (
+          <div className="col-12 mb-3">
+            <ThoughtForm />
+          </div>
+        )}
         <div className={`col-12 mb-3 ${loggedIn && "col-lg-8"}`}>
           {loading ? (
             <div>Loading...</div>

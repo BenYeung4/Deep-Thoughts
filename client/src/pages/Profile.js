@@ -15,6 +15,9 @@ import Auth from "../utils/auth";
 //adding friend
 import { ADD_FRIEND } from "../utils/mutations";
 
+//thoughtform from friends
+import ThoughtForm from "../components/ThoughtForm";
+
 const Profile = () => {
   const { username: userParam } = useParams();
 
@@ -57,6 +60,7 @@ const Profile = () => {
   }
 
   //the userParam with button helps it that only the adding friends button works with friends, not the user themselfs. or that would just be too lonely
+  //the last !userParm &&< ThoughtForm > this is used to make sure that the form only displas on he user's own Profile page, not on other users
   return (
     <div>
       <div className="flex-row mb-3">
@@ -87,6 +91,7 @@ const Profile = () => {
           />
         </div>
       </div>
+      <div className="mb-3">{!userParam && <ThoughtForm />}</div>
     </div>
   );
 };
